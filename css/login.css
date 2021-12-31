@@ -1,0 +1,43 @@
+body{
+    background-color: #101010;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@font-face {
+    font-family: game;
+    src: url('../fonts/Game.ttf');
+}
+
+.conteudo{
+    width: 70%;
+}
+
+.titulo{
+    color: #30cc30;
+    font-family: game;
+    font-size: 70px;
+    margin-bottom: 100px;
+}
+
+.card-titulo{
+    color: #30cc30;
+    font-family: game;
+    font-size: 30px;
+}
+
+input, select{
+    margin-bottom: 10px;
+}
+
+button{
+    margin-top: 10px;
+}
+
+.card-texto{
+    font-family: game;
+    font-size: 22px;
+    color: #f8f9fa;
+}
