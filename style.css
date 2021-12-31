@@ -1,0 +1,25 @@
+body{
+    background-color: #101010;
+    width: 100vw;
+    height: 100vh;
+}
+@font-face {
+    font-family: game;
+    src: url('fonts/Game.ttf');
+}
+
+.titulo{
+    color: #30cc30;
+    font-family: game;
+    font-size: 40px;
+}
+
+.btn-fecha-menu{
+    color: #30cc30;
+}
+
+.paginas{
+    font-family: game;
+    font-size: 22px;
+    
+}
