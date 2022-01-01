@@ -2,16 +2,40 @@ body{
     background-color: #101010;
     width: 100vw;
     height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
 @font-face {
     font-family: game;
     src: url('../fonts/Game.ttf');
 }
 
+.conteudo{
+    width: 70%;
+}
+
 .titulo{
     color: #30cc30;
     font-family: game;
     font-size: 40px;
+}
+
+.card-titulo{
+    color: #30cc30;
+    font-family: game;
+    font-size: 40px;
+}
+
+.card-texto{
+    font-family: game;
+    font-size: 22px;
+    color: #f8f9fa;
+}
+
+.img{
+    float: right;
 }
 
 .btn-fecha-menu{
@@ -22,5 +46,10 @@ body{
     font-family: game;
     font-size: 22px;
     
+}
+
+
+.btn-jogar{
+    margin-top: 50px;
 }
 
