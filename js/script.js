@@ -17,9 +17,13 @@ async function logar(){
     const dados = await resultado.json()
 
     if(typeof dados.id != 'undefined'){
-        sessionStorage.setItem('idAtual', dados.id)
-        sessionStorage.setItem('usuarioAtual', dados.usuario)
-        sessionStorage.setItem('classeAtual', dados.classe)
+        sessionStorage.setItem('usuario', dados.usuario)
+        sessionStorage.setItem('classe', dados.classe)
+        sessionStorage.setItem('nivel', dados.nivel)
+        sessionStorage.setItem('pontoHabilidade', dados.pontos)
+        sessionStorage.setItem('ataque', dados.ataque)
+        sessionStorage.setItem('defesa', dados.defesa)
+        sessionStorage.setItem('vida', dados.vida)
 
         window.location.href = '../html/home.html'
     
@@ -29,9 +33,19 @@ async function logar(){
 
 }
 
+function sair(){
+    sessionStorage.clear()
+    window.location.href = '../html/login.html'
+}
+
 if(window.location.href.indexOf('home.html') != -1){
-    document.querySelector('#perfil-id').innerHTML += sessionStorage.getItem('idAtual')
-    document.querySelector('#perfil-nome').innerHTML += sessionStorage.getItem('usuarioAtual')
-    document.querySelector('#perfil-classe').innerHTML += sessionStorage.getItem('classeAtual')
-    document.querySelector('#perfil-img').src += sessionStorage.getItem('classeAtual')+'.png'
+    document.querySelector('#perfil-nome').innerHTML += sessionStorage.getItem('usuario')
+    document.querySelector('#perfil-classe').innerHTML += sessionStorage.getItem('classe')
+    document.querySelector('#perfil-img').src += sessionStorage.getItem('classe')+'.png'
+    document.querySelector('#perfil-nivel').innerHTML += sessionStorage.getItem('nivel')
+    document.querySelector('#perfil-ataque').innerHTML += sessionStorage.getItem('ataque')
+    document.querySelector('#perfil-defesa').innerHTML += sessionStorage.getItem('defesa')
+    document.querySelector('#perfil-vida').innerHTML += sessionStorage.getItem('vida')
+
+
 }
