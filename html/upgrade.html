@@ -20,35 +20,47 @@
             </div>
             <div class="card-body card-texto">
               <div class="row justify-content-center text-center">
-                <div class="col-3">
+                <div class="col-4">
                   <div class="row up-atributo">
-                    <h3>Ataque</h3>
+                    <h1>Ataque</h1>
+                    <h4>Atual</h4>
                     <h4 id="up-ataque"></h4>
+                    <h4>proximo nivel</h4>
+                    <h4 id="prox-ataque"></h4>
                     <div class="d-grid mx-auto">
-                      <button class="btn-up btn-primary btn-sm" type="button" onclick="">Evoluir</button>
+                      <button id="btn-ataque" class="btn-up btn-primary btn-sm" type="button" onclick="atualizar(1)">Evoluir</button>
                     </div>
                   </div>
                 </div>
-                <div class="col-3">
+                <div class="col-4">
                   <div class="row up-atributo">
-                    <h3>Defesa</h3>
+                    <h1>Defesa</h1>
+                    <h4>Atual</h4>
                     <h4 id="up-defesa"></h4>
+                    <h4>proximo nivel</h4>
+                    <h4 id="prox-defesa"></h4>
                     <div class="d-grid mx-auto">
-                      <button class="btn-up btn-primary btn-sm" type="button" onclick="">Evoluir</button>
+                      <button id="btn-defesa" class="btn-up btn-primary btn-sm" type="button" onclick="atualizar(2)">Evoluir</button>
                     </div>
                   </div>
                 </div>
-                <div class="col-3">
+                <div class="col-4">
                   <div class="row up-atributo">
-                    <h3>Vida</h3>
+                    <h1>Vida</h1>
+                    <h4>Atual</h4>
                     <h4 id="up-vida"></h4>
+                    <h4>proximo nivel</h4>
+                    <h4 id="prox-vida"></h4>
                     <div class="d-grid mx-auto">
-                      <button class="btn-up btn-primary btn-sm" type="button" onclick="">Evoluir</button>
+                      <button id="btn-vida" class="btn-up btn-primary btn-sm" type="button" onclick="atualizar(3)">Evoluir</button>
                     </div>
                   </div>
+                </div>
+                <div class="col-12 justify-content-center">
+                  <h4 id="up-feedback" style="color: #ee3030;"></h4>
                 </div>
                 <div class="col-12">
-                  <div class="row justify-content-center">
+                  <div class="row justify-content-center" style="margin-top: 20px;">
                     <h3>Pontos</h3>
                     <h3>disponiveis</h3>
                     <h3 id="pt-disponivel" class="col-3"></h3>
@@ -66,8 +78,6 @@
 
 
 
-
-
     <script>
       //Carregar o menu
       $(document).ready(function(){
@@ -76,7 +86,7 @@
         })
       })
     </script>
-    <script src="/js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   </body>
+  <script src="/js/script.js"></script>
 </html>

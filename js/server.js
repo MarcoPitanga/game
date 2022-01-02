@@ -20,6 +20,10 @@ server.post('/logar', async (req, res) => {
     }
 })
 
+server.put('/atualizar', async (req, res) => {
+    db.atualizar(req.body)
+    res.send()
+})
 
 
 

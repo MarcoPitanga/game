@@ -23,4 +23,12 @@ async function logar(usuario, senha){
     return dados;
 }
 
-module.exports = {logar}
+
+async function atualizar(player){
+    const conn = await connect()
+    const sql = `update players set nivel = '${player.nivel}', pontos = '${player.pontos}', ataque = '${player.ataque}', defesa = '${player.defesa}', vida = '${player.vida}' where id = '${player.id}'`;
+
+    return await conn.query(sql);
+}
+
+module.exports = {logar, atualizar}
