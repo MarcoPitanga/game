@@ -1,3 +1,30 @@
+if(window.location.href.indexOf('home.html') != -1){
+    document.querySelector('#perfil-nome').innerHTML += sessionStorage.getItem('usuario')
+    document.querySelector('#perfil-classe').innerHTML += sessionStorage.getItem('classe')
+    document.querySelector('#perfil-img').src += sessionStorage.getItem('classe')+'.png'
+    document.querySelector('#perfil-nivel').innerHTML += sessionStorage.getItem('nivel')
+    document.querySelector('#perfil-ataque').innerHTML += sessionStorage.getItem('ataque')
+    document.querySelector('#perfil-defesa').innerHTML += sessionStorage.getItem('defesa')
+    document.querySelector('#perfil-vida').innerHTML += sessionStorage.getItem('vida')
+
+}
+
+if(window.location.href.indexOf('upgrade.html') != -1){
+    document.querySelector('#up-ataque').innerHTML = `> ${sessionStorage.getItem('ataque')} <`
+    document.querySelector('#up-defesa').innerHTML = `> ${sessionStorage.getItem('defesa')} <`
+    document.querySelector('#up-vida').innerHTML = `> ${sessionStorage.getItem('vida')} <`
+    document.querySelector('#pt-disponivel').innerHTML = sessionStorage.getItem('pontoHabilidade')
+}
+
+
+if(window.location.href.indexOf('login.html') == -1 && sessionStorage.getItem('id') == null){
+    window.location.href = '../html/login.html'
+    
+}
+
+
+
+
 
 async function logar(){
     let logUsuario = document.querySelector('#log-usuario').value
@@ -17,6 +44,7 @@ async function logar(){
     const dados = await resultado.json()
 
     if(typeof dados.id != 'undefined'){
+        sessionStorage.setItem('id', dados.id)
         sessionStorage.setItem('usuario', dados.usuario)
         sessionStorage.setItem('classe', dados.classe)
         sessionStorage.setItem('nivel', dados.nivel)
@@ -35,17 +63,4 @@ async function logar(){
 
 function sair(){
     sessionStorage.clear()
-    window.location.href = '../html/login.html'
-}
-
-if(window.location.href.indexOf('home.html') != -1){
-    document.querySelector('#perfil-nome').innerHTML += sessionStorage.getItem('usuario')
-    document.querySelector('#perfil-classe').innerHTML += sessionStorage.getItem('classe')
-    document.querySelector('#perfil-img').src += sessionStorage.getItem('classe')+'.png'
-    document.querySelector('#perfil-nivel').innerHTML += sessionStorage.getItem('nivel')
-    document.querySelector('#perfil-ataque').innerHTML += sessionStorage.getItem('ataque')
-    document.querySelector('#perfil-defesa').innerHTML += sessionStorage.getItem('defesa')
-    document.querySelector('#perfil-vida').innerHTML += sessionStorage.getItem('vida')
-
-
 }
