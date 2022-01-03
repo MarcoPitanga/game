@@ -1,3 +1,7 @@
+if(window.location.href.indexOf('login.html') == -1 && sessionStorage.getItem('id') == null){
+    window.location.href = '../html/login.html'  
+}
+
 if(window.location.href.indexOf('home.html') != -1){
     document.querySelector('#perfil-nome').innerHTML += sessionStorage.getItem('usuario')
     document.querySelector('#perfil-classe').innerHTML += sessionStorage.getItem('classe')
@@ -19,8 +23,10 @@ if(window.location.href.indexOf('upgrade.html') != -1){
     document.querySelector('#pt-disponivel').innerHTML = sessionStorage.getItem('pontos')
 }
 
-if(window.location.href.indexOf('login.html') == -1 && sessionStorage.getItem('id') == null){
-    window.location.href = '../html/login.html'
+if(window.location.href.indexOf('jogar.html') != -1){
+    document.querySelector('#andar-atual').innerHTML += sessionStorage.getItem('andar')
+    document.querySelector('#img-player').src += sessionStorage.getItem('classe')+'.png'
+    recuperarAndar(parseInt(sessionStorage.getItem('andar')))
     
 }
 
@@ -36,9 +42,7 @@ async function logar(){
             usuario: logUsuario,
             senha: logSenha
         })
-    }).finally(() => {
-        
-    })
+    }).finally()
 
     const dados = await resultado.json()
 
@@ -51,6 +55,7 @@ async function logar(){
         sessionStorage.setItem('ataque', dados.ataque)
         sessionStorage.setItem('defesa', dados.defesa)
         sessionStorage.setItem('vida', dados.vida)
+        sessionStorage.setItem('andar', dados.andar)
 
         window.location.href = '../html/home.html'
     
@@ -114,6 +119,21 @@ function atualizar(op){
             vida: sessionStorage.getItem('vida')
         })
     }).finally()
+}
+
+async function recuperarAndar(numAndar){
+    const resposta = await fetch('http://localhost:3000/andar', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            numAndar
+        })
+    }).then(dadosAndar => dadosAndar.json()).then(dadosAndar => {
+        sessionStorage.setItem('andar-img', dadosAndar[0][0].img)
+        sessionStorage.setItem('andar-dano', dadosAndar[0][0].dano)
+        sessionStorage.setItem('andar-vida', dadosAndar[0][0].vida)
+        document.querySelector('#img-inimigo').src += dadosAndar[0][0].img
+    })
 }
 
 function sair(){

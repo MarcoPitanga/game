@@ -19,16 +19,22 @@ async function connect(){
 
 async function logar(usuario, senha){
     const conn = await connect();
-    const dados = await conn.query(`select * from players where usuario = '${usuario}' and senha = '${senha}'`);
-    return dados;
+    const dados = await conn.query(`select * from players where usuario = '${usuario}' and senha = '${senha}'`)
+    return dados
 }
 
 
 async function atualizar(player){
     const conn = await connect()
-    const sql = `update players set nivel = '${player.nivel}', pontos = '${player.pontos}', ataque = '${player.ataque}', defesa = '${player.defesa}', vida = '${player.vida}' where id = '${player.id}'`;
+    const sql = `update players set nivel = '${player.nivel}', pontos = '${player.pontos}', ataque = '${player.ataque}', defesa = '${player.defesa}', vida = '${player.vida}' where id = '${player.id}'`
 
-    return await conn.query(sql);
+    return await conn.query(sql)
 }
 
-module.exports = {logar, atualizar}
+async function buscarAndar(andar){
+    const conn = await connect()
+    const dados = await conn.query(`select * from andares where andar = '${andar}'`)
+    return dados
+}
+
+module.exports = {logar, atualizar, buscarAndar}

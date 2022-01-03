@@ -25,6 +25,11 @@ server.put('/atualizar', async (req, res) => {
     res.send()
 })
 
+server.post('/andar/', async (req, res) => {
+    const resultado = await db.buscarAndar(req.body.numAndar)
+    res.json(resultado)
+})
+
 
 
 server.listen(port, () => {
