@@ -95,16 +95,14 @@ function atualizar(op){
                 document.querySelector('#up-feedback').innerHTML = 'Pontos de Habilidade insuficiente'
             }
             break
+        case 4:
+            sessionStorage.setItem('andar', parseInt(sessionStorage.getItem('andar')) + 1)
+            break
+        case 5:
+            sessionStorage.setItem('andar', 1)
+            break
     }
-
-    document.querySelector('#up-ataque').innerHTML = `> ${sessionStorage.getItem('ataque')} <`
-    document.querySelector('#up-defesa').innerHTML = `> ${sessionStorage.getItem('defesa')} <`
-    document.querySelector('#up-vida').innerHTML = `> ${sessionStorage.getItem('vida')} <`
-    document.querySelector('#prox-ataque').innerHTML = `> ${parseInt(sessionStorage.getItem('ataque'))+50} <`
-    document.querySelector('#prox-defesa').innerHTML = `> ${parseInt(sessionStorage.getItem('defesa'))+50} <`
-    document.querySelector('#prox-vida').innerHTML = `> ${parseInt(sessionStorage.getItem('vida'))+500} <`
-    document.querySelector('#pt-disponivel').innerHTML = sessionStorage.getItem('pontos')
-
+    
 
     fetch('http://localhost:3000/atualizar', {
         method: 'PUT',
@@ -115,9 +113,13 @@ function atualizar(op){
             pontos: sessionStorage.getItem('pontos'),
             ataque: sessionStorage.getItem('ataque'),
             defesa: sessionStorage.getItem('defesa'),
-            vida: sessionStorage.getItem('vida')
+            vida: sessionStorage.getItem('vida'),
+            andar: sessionStorage.getItem('andar')
+
         })
-    }).finally()
+    }).finally(() => {
+        location.reload()
+    })
 }
 
 function recuperarAndar(numAndar){
@@ -128,7 +130,6 @@ function recuperarAndar(numAndar){
             numAndar
         })
     }).then(dadosAndar => dadosAndar.json()).then(dadosAndar => {
-        console.log(dadosAndar)
         sessionStorage.setItem('andar-img', dadosAndar.img)
         sessionStorage.setItem('andar-dano', dadosAndar.dano)
         sessionStorage.setItem('andar-vida', dadosAndar.vida)
@@ -150,31 +151,44 @@ async function jogar(){
     }
     
     $('#loading').removeClass('desabilitar')
+    $('#btn-play').addClass('desabilitar')
     do{ 
         if(rodada % 2 != 0){
             inimigo.vida -= player.ataque
-            let vidaPorcentagem = (inimigo.vida*10)/100
-            document.querySelector('#vida-inimigo').style.width = vidaPorcentagem + '%'
-            document.querySelector('#vida-inimigo-texto').innerHTML = vidaPorcentagem + '%'
+            let vidaPorcentagem = (inimigo.vida*100)/(sessionStorage.getItem('andar-vida'))
+            if(vidaPorcentagem < 0){
+                document.querySelector('#vida-inimigo').style.width = '0%'
+                document.querySelector('#vida-inimigo-texto').innerHTML = '0%'
+            }else{
+                document.querySelector('#vida-inimigo').style.width = vidaPorcentagem.toFixed(1) + '%'
+                document.querySelector('#vida-inimigo-texto').innerHTML = vidaPorcentagem.toFixed(1) + '%'
+            }
 
         }else{
             player.vida -= (inimigo.dano - (player.defesa/10))
-            let vidaPorcentagem = (player.vida*10)/100
-            document.querySelector('#vida-player').style.width = vidaPorcentagem + '%'
-            document.querySelector('#vida-player-texto').innerHTML = vidaPorcentagem + '%'
-            
+            let vidaPorcentagem = (player.vida*100)/(sessionStorage.getItem('vida'))
+            if(vidaPorcentagem < 0){
+                document.querySelector('#vida-player').style.width = '0%'
+                document.querySelector('#vida-player-texto').innerHTML = '0%'
+            }else{
+                document.querySelector('#vida-player').style.width = vidaPorcentagem.toFixed(1) + '%'
+                document.querySelector('#vida-player-texto').innerHTML = vidaPorcentagem.toFixed(1) + '%'
+            }
         }
         await time(500)
         rodada++
     }while(player.vida > 0 && inimigo.vida > 0)
         
     $('#loading').addClass('desabilitar')
+
     if(player.vida > 0 ){
-        document.querySelector('#resultado').innerHTML = 'Você venceu !'
+        document.querySelector('#resultado').innerHTML = 'Você venceu'
+        document.querySelector('#resultado').style.color = '#30cc30'
         $('#resultado').removeClass('desabilitar')
         $('#btn-proximo').removeClass('desabilitar')
     }else{
-        document.querySelector('#jogo-feedback').innerHTML = 'Você Perdeu !'
+        document.querySelector('#resultado').innerHTML = 'Você Perdeu'
+        document.querySelector('#resultado').style.color = '#ee3030'
         $('#resultado').removeClass('desabilitar')
         $('#btn-resetar').removeClass('desabilitar')
     }

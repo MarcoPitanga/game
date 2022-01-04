@@ -37,11 +37,7 @@
                       <img class="col-3" src="../img/loading.gif">
                     </div>
                     <div>
-                      <h4 id="resultado" class="desabilitar text-center" style="color: #ee3030;"></h4>
-                      <div class="d-grid col-4 mx-auto">
-                        <button id="btn-proximo" class="desabilitar btn-up btn-primary btn-sm" type="button" onclick="">Proximo</button>
-                        <button id="btn-resetar" class="desabilitar btn-up btn-primary btn-sm" type="button" onclick="">Resetar</button>
-                      </div>
+                      <h4 id="resultado" class="desabilitar text-center"></h4>
                     </div>
                     
                   </div>
@@ -54,7 +50,9 @@
                   </div>
                 </div>
                 <div class="d-grid col-4 mx-auto">
-                  <button id="btn-ataque" class="btn-up btn-primary btn-sm" type="button" onclick="jogar()">Play</button>
+                  <button id="btn-play" class="btn-up btn-primary btn-sm" type="button" onclick="jogar()">Play</button>
+                  <button id="btn-proximo" class="desabilitar btn-up btn-primary btn-sm" type="button" onclick="atualizar(4)">Proximo</button>
+                  <button id="btn-resetar" class="desabilitar btn-up btn-primary btn-sm" type="button" onclick="atualizar(5)">Resetar</button>
                 </div>
                 
               </div>
