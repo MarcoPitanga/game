@@ -23,29 +23,40 @@
                 <h3 id="andar-atual" class="text-center col-12">Andar atual > </h3>
                 <div class="row justify-content-between game">
                   <div class="col-4">
-                    <img id="img-player" class="game-img col-12" style="border: 5px solid #f8f9fa;" src="../img/">
+                    <img id="img-player" class="game-img col-10" style="border: 5px solid #f8f9fa;" src="../img/">
                     <div class="progress" style="height: 25px; margin-bottom: 20px;">
-                      <div class="progress-bar bg-danger" role="progressbar" style="width: 100%"aria-valuemin="0" aria-valuemax="100"><a style="font-size: 20px;">100%</a></div>
+                      <div id="vida-player" class="progress-bar bg-danger" role="progressbar" style="width: 100%"aria-valuemin="0" aria-valuemax="100"><a id="vida-player-texto" style="font-size: 20px;">100%</a></div>
                     </div>
                   </div>
 
-                  <div id="loading" class="col-4 text-center" style="margin-top: 20px">
-                    <h4 class="col-12">Batalha</h4>
-                    <h4 class="col-12">Em</h4>
-                    <h4 class="col-12">Andamento</h4>
-                    <img class="col-3" src="../img/loading.gif">
+                  <div class="col-4 text-center " style="margin-top: 20px">
+                    <div id="loading" class="desabilitar">
+                      <h4 class="col-12">Batalha</h4>
+                      <h4 class="col-12">Em</h4>
+                      <h4 class="col-12">Andamento</h4>
+                      <img class="col-3" src="../img/loading.gif">
+                    </div>
+                    <div>
+                      <h4 id="resultado" class="desabilitar text-center" style="color: #ee3030;"></h4>
+                      <div class="d-grid col-4 mx-auto">
+                        <button id="btn-proximo" class="desabilitar btn-up btn-primary btn-sm" type="button" onclick="">Proximo</button>
+                        <button id="btn-resetar" class="desabilitar btn-up btn-primary btn-sm" type="button" onclick="">Resetar</button>
+                      </div>
+                    </div>
+                    
                   </div>
 
                   <div class="col-4">
-                    <img id="img-inimigo" class="game-img col-12" src="../img/">
+                    <img id="img-inimigo" class="game-img col-10" src="../img/">
                     <div class="progress" style="height: 25px; margin-bottom: 20px;">
-                      <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuemin="0" aria-valuemax="100"><a style="font-size: 20px;">100%</a></div>
+                      <div id="vida-inimigo" class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuemin="0" aria-valuemax="100"><a id="vida-inimigo-texto" style="font-size: 20px;">100%</a></div>
                     </div>
                   </div>
                 </div>
                 <div class="d-grid col-4 mx-auto">
-                  <button id="btn-ataque" class="btn-up btn-primary btn-sm" type="button" onclick="recuperarAndar(1)">Play</button>
+                  <button id="btn-ataque" class="btn-up btn-primary btn-sm" type="button" onclick="jogar()">Play</button>
                 </div>
+                
               </div>
             </div>
           </div>

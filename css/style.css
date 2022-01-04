@@ -25,7 +25,7 @@ body{
 .card-titulo{
     color: #30cc30;
     font-family: game;
-    font-size: 50px;
+    font-size: 40px;
 }
 
 .card-texto{
@@ -75,12 +75,14 @@ body{
 
 .game-img{
     margin-top: 20px;
+    margin-left: 20px;
 }
 
 .progress{
     margin-top: 30px;
 }
 
-#btn-ataque{
-    font-size: 18px;
+.desabilitar{
+    display: none;
+
 }

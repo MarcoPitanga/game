@@ -27,9 +27,8 @@ if(window.location.href.indexOf('jogar.html') != -1){
     document.querySelector('#andar-atual').innerHTML += sessionStorage.getItem('andar')
     document.querySelector('#img-player').src += sessionStorage.getItem('classe')+'.png'
     recuperarAndar(parseInt(sessionStorage.getItem('andar')))
-    
-}
 
+}
 
 async function logar(){
     let logUsuario = document.querySelector('#log-usuario').value
@@ -121,19 +120,69 @@ function atualizar(op){
     }).finally()
 }
 
-async function recuperarAndar(numAndar){
-    const resposta = await fetch('http://localhost:3000/andar', {
+function recuperarAndar(numAndar){
+    fetch('http://localhost:3000/andar', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
             numAndar
         })
     }).then(dadosAndar => dadosAndar.json()).then(dadosAndar => {
-        sessionStorage.setItem('andar-img', dadosAndar[0][0].img)
-        sessionStorage.setItem('andar-dano', dadosAndar[0][0].dano)
-        sessionStorage.setItem('andar-vida', dadosAndar[0][0].vida)
-        document.querySelector('#img-inimigo').src += dadosAndar[0][0].img
+        console.log(dadosAndar)
+        sessionStorage.setItem('andar-img', dadosAndar.img)
+        sessionStorage.setItem('andar-dano', dadosAndar.dano)
+        sessionStorage.setItem('andar-vida', dadosAndar.vida)
+        document.querySelector('#img-inimigo').src += dadosAndar.img
     })
+}
+
+async function jogar(){
+    let rodada = 1
+
+    let player = {
+        ataque: parseInt(sessionStorage.getItem('ataque')),
+        defesa: parseInt(sessionStorage.getItem('defesa')),
+        vida: parseInt(sessionStorage.getItem('vida'))
+    }
+    let inimigo = {
+        dano: parseInt(sessionStorage.getItem('andar-dano')),
+        vida: parseInt(sessionStorage.getItem('andar-vida'))
+    }
+    
+    $('#loading').removeClass('desabilitar')
+    do{ 
+        if(rodada % 2 != 0){
+            inimigo.vida -= player.ataque
+            let vidaPorcentagem = (inimigo.vida*10)/100
+            document.querySelector('#vida-inimigo').style.width = vidaPorcentagem + '%'
+            document.querySelector('#vida-inimigo-texto').innerHTML = vidaPorcentagem + '%'
+
+        }else{
+            player.vida -= (inimigo.dano - (player.defesa/10))
+            let vidaPorcentagem = (player.vida*10)/100
+            document.querySelector('#vida-player').style.width = vidaPorcentagem + '%'
+            document.querySelector('#vida-player-texto').innerHTML = vidaPorcentagem + '%'
+            
+        }
+        await time(500)
+        rodada++
+    }while(player.vida > 0 && inimigo.vida > 0)
+        
+    $('#loading').addClass('desabilitar')
+    if(player.vida > 0 ){
+        document.querySelector('#resultado').innerHTML = 'Você venceu !'
+        $('#resultado').removeClass('desabilitar')
+        $('#btn-proximo').removeClass('desabilitar')
+    }else{
+        document.querySelector('#jogo-feedback').innerHTML = 'Você Perdeu !'
+        $('#resultado').removeClass('desabilitar')
+        $('#btn-resetar').removeClass('desabilitar')
+    }
+
+}
+
+async function time(ms){
+    return new Promise(resolv => setTimeout(resolv, ms))
 }
 
 function sair(){

@@ -4,6 +4,8 @@ const db = require('./db')
 const server = express()
 const port = 3000
 
+const andar = require('./andares')
+
 server.use(express.json())
 server.use(express.urlencoded({ extended: false }))
 server.use(cors())
@@ -26,8 +28,7 @@ server.put('/atualizar', async (req, res) => {
 })
 
 server.post('/andar/', async (req, res) => {
-    const resultado = await db.buscarAndar(req.body.numAndar)
-    res.json(resultado)
+    res.json(andar[req.body.numAndar])
 })
 
 

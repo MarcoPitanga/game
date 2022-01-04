@@ -31,10 +31,4 @@ async function atualizar(player){
     return await conn.query(sql)
 }
 
-async function buscarAndar(andar){
-    const conn = await connect()
-    const dados = await conn.query(`select * from andares where andar = '${andar}'`)
-    return dados
-}
-
-module.exports = {logar, atualizar, buscarAndar}
+module.exports = {logar, atualizar}

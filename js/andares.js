@@ -100,3 +100,5 @@ const andar = {
         dano: 520
     }
 }
+
+module.exports = andar
