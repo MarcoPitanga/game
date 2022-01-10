@@ -26,7 +26,7 @@ async function logar(usuario, senha){
 
 async function atualizar(player){
     const conn = await connect()
-    const sql = `update players set nivel = '${player.nivel}', pontos = '${player.pontos}', ataque = '${player.ataque}', defesa = '${player.defesa}', vida = '${player.vida}', andar = '${player.andar}' where id = '${player.id}'`
+    const sql = `update players set nivel = '${player.nivel}', pontos = '${player.pontos}', ataque = '${player.ataque}', defesa = '${player.defesa}', vida = '${player.vida}', andar = '${player.andar}', experiencia = '${player.experiencia}' where id = '${player.id}'`
 
     return await conn.query(sql)
 }

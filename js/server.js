@@ -5,6 +5,7 @@ const server = express()
 const port = 3000
 
 const andar = require('./andares')
+const niveis = require('./niveis')
 
 server.use(express.json())
 server.use(express.urlencoded({ extended: false }))
@@ -31,7 +32,9 @@ server.post('/andar/', async (req, res) => {
     res.json(andar[req.body.numAndar])
 })
 
-
+server.post('/exp/', async (req, res) => {
+    res.json(niveis[req.body.lvl])
+})
 
 server.listen(port, () => {
     console.log('Para fechar o servidor: ctrl + c')

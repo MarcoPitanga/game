@@ -10,7 +10,18 @@ if(window.location.href.indexOf('home.html') != -1){
     document.querySelector('#perfil-ataque').innerHTML += sessionStorage.getItem('ataque')
     document.querySelector('#perfil-defesa').innerHTML += sessionStorage.getItem('defesa')
     document.querySelector('#perfil-vida').innerHTML += sessionStorage.getItem('vida')
-
+    
+    let expPorcentagem = (sessionStorage.getItem('exp')*100)/(sessionStorage.getItem('exp-nivel'))
+    if(expPorcentagem <= 0){
+        document.querySelector('#exp-player').style.width = '100%'
+        document.querySelector('#exp-player-texto').innerHTML = '0 / ' + sessionStorage.getItem('exp-nivel')
+        $('#exp-player').removeClass('bg-success')
+        $('#exp-player').addClass('bg-secondary')
+    }else{
+        document.querySelector('#exp-player').style.width = expPorcentagem + '%'
+        document.querySelector('#exp-player-texto').innerHTML = sessionStorage.getItem('exp') + ' / ' + sessionStorage.getItem('exp-nivel')
+    }
+    
 }
 
 if(window.location.href.indexOf('upgrade.html') != -1){
@@ -55,7 +66,8 @@ async function logar(){
         sessionStorage.setItem('defesa', dados.defesa)
         sessionStorage.setItem('vida', dados.vida)
         sessionStorage.setItem('andar', dados.andar)
-
+        sessionStorage.setItem('exp', dados.experiencia)
+        recuperarExp(sessionStorage.getItem('nivel'))
         window.location.href = '../html/home.html'
     
     }else{
@@ -65,11 +77,10 @@ async function logar(){
 }
 
 function atualizar(op){
-    
+    let aux = 1
     switch(op){
         case 0:
-            sessionStorage.setItem('nivel', parseInt(sessionStorage.getItem('nivel')) + 1)
-            sessionStorage.setItem('pontos', parseInt(sessionStorage.getItem('pontos')) + 1)
+            aux = 0
             break
         case 1:
             if(parseInt(sessionStorage.getItem('pontos')) > 0){
@@ -114,11 +125,13 @@ function atualizar(op){
             ataque: sessionStorage.getItem('ataque'),
             defesa: sessionStorage.getItem('defesa'),
             vida: sessionStorage.getItem('vida'),
-            andar: sessionStorage.getItem('andar')
-
+            andar: sessionStorage.getItem('andar'),
+            experiencia: sessionStorage.getItem('exp')
         })
     }).finally(() => {
-        location.reload()
+        if(aux != 0){
+            location.reload()
+        }
     })
 }
 
@@ -133,8 +146,23 @@ function recuperarAndar(numAndar){
         sessionStorage.setItem('andar-img', dadosAndar.img)
         sessionStorage.setItem('andar-dano', dadosAndar.dano)
         sessionStorage.setItem('andar-vida', dadosAndar.vida)
+        sessionStorage.setItem('andar-exp', dadosAndar.exp)
         document.querySelector('#img-inimigo').src += dadosAndar.img
     })
+}
+
+function recuperarExp(lvl){
+    fetch('http://localhost:3000/exp', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            lvl
+        })
+    }).then(dados => dados.json()).then(dados => {
+        sessionStorage.setItem('exp-nivel', dados.exp)
+        sessionStorage.setItem('pts-nivel', dados.pontos)
+    })
+
 }
 
 async function jogar(){
@@ -182,9 +210,23 @@ async function jogar(){
     $('#loading').addClass('desabilitar')
 
     if(player.vida > 0 ){
+        sessionStorage.setItem('exp', parseInt(sessionStorage.getItem('exp')) + parseInt(sessionStorage.getItem('andar-exp')))
+
+        if(parseInt(sessionStorage.getItem('exp')) >= parseInt(sessionStorage.getItem('exp-nivel'))){
+            sessionStorage.setItem('exp', parseInt(sessionStorage.getItem('exp-nivel')) - parseInt(sessionStorage.getItem('exp')))
+            sessionStorage.setItem('nivel', parseInt(sessionStorage.getItem('nivel')) + 1)
+            sessionStorage.setItem('pontos', parseInt(sessionStorage.getItem('pontos')) + parseInt(sessionStorage.getItem('pts-nivel')))
+            document.querySelector('#resultado-upgrade').innerHTML = 'Você passou de nivel!'
+            $('#resultado-upgrade').removeClass('desabilitar')
+        }
+        atualizar(0)
         document.querySelector('#resultado').innerHTML = 'Você venceu'
         document.querySelector('#resultado').style.color = '#30cc30'
+        document.querySelector('#resultado-exp').innerHTML = '+ ' + sessionStorage.getItem('andar-exp') + ' xp'
+        document.querySelector('#resultado-exp').style.color = '#30cc30'
+        
         $('#resultado').removeClass('desabilitar')
+        $('#resultado-exp').removeClass('desabilitar')
         $('#btn-proximo').removeClass('desabilitar')
     }else{
         document.querySelector('#resultado').innerHTML = 'Você Perdeu'
